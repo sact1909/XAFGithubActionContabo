@@ -21,7 +21,7 @@ jobs:
     - name: Ensure GitHub NuGet Source
       run: |
         dotnet nuget add source ${{ env.NUGET_URL }} \
-          -n DevExpress Feed \
+          -n DevExpressFeed \
           -u DevExpress \
           -p ${{ secrets.DEVEXPRESS_NUGET_KEY }} \
           --store-password-in-clear-text
