@@ -9,17 +9,22 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  NUGET_URL: "https://nuget.devexpress.com/api"
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - name: Adjust NuGet Config Credentials
+    - name: Ensure GitHub NuGet Source
       run: |
-        rm -f ../nuget.config
-        mv nuget.ci.config nuget.config
-        echo $(sed -e "s/\${NUGET_KEY}/${{ secrets.DEVEXPRESS_NUGET_KEY }}/" nuget.config) >nuget.config
+        dotnet nuget add source ${{ env.NUGET_URL }} \
+          -n DevExpress Feed \
+          -u DevExpress \
+          -p ${{ secrets.DEVEXPRESS_NUGET_KEY }} \
+          --store-password-in-clear-text
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
