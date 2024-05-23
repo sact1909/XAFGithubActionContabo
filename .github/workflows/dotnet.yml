@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: Adjust NuGet Config Credentials
       run: |
-        rm -f ./nuget.config
+        rm -f ../nuget.config
         mv nuget.ci.config nuget.config
         echo $(sed -e "s/\${NUGET_KEY}/${{ secrets.DEVEXPRESS_NUGET_KEY }}/" nuget.config) >nuget.config
     - uses: actions/checkout@v4
